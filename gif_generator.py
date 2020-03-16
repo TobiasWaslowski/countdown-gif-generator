@@ -9,12 +9,12 @@ from pygifsicle import optimize
 
 # The different official AIESEC colours, as can be found in the Blue Book.
 colours = {
-    'Blue':'#037FF3FF',
+    'Blue':'#037EF3FF',
     'White':'#F3F4F7FF',
     'Orange':'#F48924FF',
     'Turquois':'#0A8EA0FF',
     'Transparent':'#FFFFFF00',
-    'Grey':'#52565E'
+    'Grey':'#52565EFF'
 }
 
 # Statically declare height and width of gif
@@ -42,21 +42,21 @@ def draw_on_image(img, text, text_colour):
 # Saves a GIF made up of different frames to the disk.
 # Input: an array of frames.
 def save_gif(frames, name):
-    filename = 'out/{}.gif'.format(name)
+    filename = 'out/' + name
     frames[0].save(
         filename, 
         format='GIF', 
         append_images=frames[1:], 
         save_all=True, 
         duration=1000, 
-        fps=1,
         #transparency=0
     )
     # Optimize GIF
     optimize(filename)
 
-def generate_gif(t, background_colour, text_colour):
+def generate_gif(minutes, seconds, background_colour, text_colour):
     frames = []
+    t = int(minutes) * 60 + int(seconds)
     for i in range(t, -1, -1):
         mins, secs = divmod(i, 60)
         timeformat = '{:02d}:{:02d}'.format(mins, secs)
@@ -65,5 +65,7 @@ def generate_gif(t, background_colour, text_colour):
         # Inserts current countdown state into frame
         draw_on_image(new_frame, timeformat, text_colour)
         frames.append(new_frame)
-    save_gif(frames, str(t))
-    print('Finsih')
+    save_gif(frames, '{}_{}_{}_{}.gif'.format(minutes, seconds, background_colour, text_colour))
+    print('Finished!')
+
+#generate_gif(1,0, '#FFFFFF00', '#037EF3FF')

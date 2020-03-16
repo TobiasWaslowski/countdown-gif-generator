@@ -33,7 +33,8 @@ text_color_dropdown = Combo(
 generate = PushButton(
     app, 
     command=lambda: gif_generator.generate_gif(
-        int(minutes_input.value) * 60 + int(seconds_input.value),
+        minutes_input.value, 
+        seconds_input.value,
         background_color_dropdown.value,
         text_color_dropdown.value
         ), 
