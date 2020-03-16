@@ -17,7 +17,7 @@ text_color_dropdown_label = Text(app, text='Countdown text colour', grid=[0,5], 
 background_color_dropdown = Combo(
     app, 
     grid=[0,4,2,1], 
-    options=['White', 'Blue', 'Orange', 'Turquois', 'Transparent', 'Grey'], 
+    options=['White', 'Grey', 'Blue', 'Transparent'], 
     width=20, 
     align="left"
     )
@@ -25,7 +25,7 @@ background_color_dropdown = Combo(
 text_color_dropdown = Combo(
     app, 
     grid=[0,6,2,1], 
-    options=['Blue', 'Orange', 'Turquois', 'Grey'], 
+    options=['Blue', 'Orange', 'Turquois', 'Grey', 'White'], 
     width=20, 
     align="left"
     )

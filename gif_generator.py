@@ -41,7 +41,7 @@ def draw_on_image(img, text, text_colour):
 
 # Saves a GIF made up of different frames to the disk.
 # Input: an array of frames.
-def save_gif(frames, name):
+def save_gif(frames, name, transparency):
     filename = 'out/' + name
     frames[0].save(
         filename, 
@@ -49,13 +49,20 @@ def save_gif(frames, name):
         append_images=frames[1:], 
         save_all=True, 
         duration=1000, 
-        #transparency=0
+        transparency=transparency,
+        disposal=2
     )
     # Optimize GIF
     optimize(filename)
 
 def generate_gif(minutes, seconds, background_colour, text_colour):
     frames = []
+    # So you might be wondering what this does.
+    # Long story short, PILs documentation regarding the transparency flag in GIFs isn't exactly ideal.
+    # But through trial and error I found out that setting transparency=1000 disables the transparency.
+    transparency = 1000
+    if background_colour == 'Transparent': 
+        transparency = 0
     t = int(minutes) * 60 + int(seconds)
     for i in range(t, -1, -1):
         mins, secs = divmod(i, 60)
@@ -65,7 +72,5 @@ def generate_gif(minutes, seconds, background_colour, text_colour):
         # Inserts current countdown state into frame
         draw_on_image(new_frame, timeformat, text_colour)
         frames.append(new_frame)
-    save_gif(frames, '{}_{}_{}_{}.gif'.format(minutes, seconds, background_colour, text_colour))
+    save_gif(frames, '{}_{}_{}_{}.gif'.format(minutes, seconds, background_colour, text_colour), transparency)
     print('Finished!')
-
-#generate_gif(1,0, '#FFFFFF00', '#037EF3FF')
